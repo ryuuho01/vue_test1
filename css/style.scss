@@ -1,0 +1,47 @@
+.tab {
+  width: 500px;
+  margin: 20px;
+  .tab-menu {
+    display: flex;
+    .tab-menu__item {
+      text-align: center;
+      cursor: pointer;
+      list-style: none;
+      width: 100px;
+      padding: 5px 0;
+      border: 1px solid rgb(203, 203, 203);
+    }
+  }
+  .tab-content {
+    padding: 5px 0;
+  }
+}
+
+.open {
+  margin-bottom: 20px;
+}
+.modal {
+  display: none;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,0.5);
+  .modal__content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    .modal__content-inner{
+      background-color: white;
+      width: 500px;
+      text-align: center;
+      padding: 50px;
+    }
+  }
+}
+
+.items {
+  padding-bottom: 10px;
+}

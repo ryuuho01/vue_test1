@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <!-- 切り替えタブ -->
+  <div id="app">
+    <tab-component></tab-component>
+  </div>
+  <script>
+    Vue.component('tab-component', {
+      template: `
+          <div class="tab">
+            <div>
+              <ul class="tab-menu">
+                <li :style="showStyle_01" v-on:click="toggle_01" class="tab-menu__item">タブ１</li>
+                <li :style="showStyle_02" v-on:click="toggle_02" class="tab-menu__item">タブ２</li>
+                <li :style="showStyle_03" v-on:click="toggle_03" class="tab-menu__item">タブ３</li>
+              </ul>
+            </div>
+            <div class="tab-content">
+              <div v-show="isShow_01" class="tab-content__item">コンテンツ１</div>
+              <div v-show="isShow_02" class="tab-content__item">コンテンツ２</div>
+              <div v-show="isShow_03" class="tab-content__item">コンテンツ３</div>
+            </div>
+          </div>`,
+      data: function () {
+        return {
+          isShow_01: true,
+          isShow_02: false,
+          isShow_03: false,
+        }
+      },
+      methods: {
+        toggle_01() {
+          this.isShow_01 = true;
+          this.isShow_02 = false;
+          this.isShow_03 = false;
+        },
+        toggle_02() {
+          this.isShow_01 = false;
+          this.isShow_02 = true;
+          this.isShow_03 = false;
+        },
+        toggle_03() {
+          this.isShow_01 = false;
+          this.isShow_02 = false;
+          this.isShow_03 = true;
+        }
+      },
+      computed: {
+        showStyle_01: function () {
+          return {
+            color: this.isShow_01 ? 'white' : 'black',
+            background: this.isShow_01 ? 'black' : 'white',
+          }
+        },
+        showStyle_02: function () {
+          return {
+            color: this.isShow_02 ? 'white' : 'black',
+            background: this.isShow_02 ? 'black' : 'white',
+          }
+        },
+        showStyle_03: function () {
+          return {
+            color: this.isShow_03 ? 'white' : 'black',
+            background: this.isShow_03 ? 'black' : 'white',
+          }
+        }
+      }
+    });
+    new Vue({
+      el: '#app',
+    });
+  </script>
+
+  <!-- モーダルウィンドウ -->
+  <div id="app2">
+    <modal-component></modal-component>
+  </div>
+  <script>
+    Vue.component('modal-component', {
+      template: `
+            <div>
+              <input type="button" v-on:click="openBtn" value="開く" class="open">
+              <div :style="showStyle_open" class="modal">
+                <div v-on:click.self="closeBtn" class="modal__content">
+                  <div class="modal__content-inner">
+                    <p>モーダルウィンドウ</p><br>
+                    <input type="button" v-on:click="closeBtn" id="closeBtn" value="閉じる">
+                  </div>
+                </div>
+              </div>
+            </div>`,
+      data: function () {
+        return {
+          open_close: false,
+        }
+      },
+      methods: {
+        openBtn() {
+          this.open_close = !this.open_close;
+        },
+        closeBtn() {
+          this.open_close = !this.open_close;
+        }
+      },
+      computed: {
+        showStyle_open: function () {
+          return {
+            display: this.open_close ? 'block' : 'none',
+          }
+        },
+      },
+    });
+    new Vue({
+      el: '#app2',
+    });
+  </script>
+
+  <!-- リアルタイム検索 -->
+  <div id="app3">
+    <realtimesearch-component></realtimesearch-component>
+  </div>
+  <script>
+    Vue.component('realtimesearch-component', {
+      template: `
+        <div>
+          <input type="text" v-model="keyword">
+          <table>
+            <tr v-for="user in filteredUsers" :key="user">
+              <td class="items">{{user}}</td>
+            </tr>
+          </table>
+        </div>`,
+      data: function() {
+        return {
+          keyword: '',
+          users: ['佐藤', '山田', '鈴木', '田中'],
+        }
+      },
+      computed: {
+        filteredUsers: function () {
+          let users = [];
+          for (let i in this.users) {
+            let user = this.users[i];
+            if (user.indexOf(this.keyword) !== -1) {
+              users.push(user);
+            }
+          }
+          return users;
+        },
+      },
+    });
+    new Vue({
+        el: '#app3',
+    });
+  </script>
+
+  
+
+
+  
+
+</body>
+
+</html>
